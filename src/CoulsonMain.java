@@ -37,7 +37,7 @@ public class CoulsonMain {
         //User inputs size of their puzzle.
         int matrixSize = in.nextInt();
 
-        //output advising user to see what 
+        //output advising user to see what
         System.out.println("""
                 
                 Now it's time to show me your sudoku puzzle!
@@ -46,6 +46,27 @@ public class CoulsonMain {
                 
                 
                 """);
+        int[][] puzzle = generateMatrix(matrixSize, in);
 
+        for(int i = 0; i < puzzle.length; i++){
+            System.out.println(Arrays.toString(puzzle[i]));
+        }
     }
 }
+
+    /**
+     *
+     * @param matrixSize
+     * @param in
+     * @return
+     */
+    public static int[][] generateMatrix(int matrixSize, Scanner in){
+        int [][] display = new int[matrixSize][matrixSize];
+
+        for(int i =0; i < matrixSize; i++){
+            for(int j  =  0; j< matrixSize; j++){
+                display[i][j] = in.nextInt();
+            }
+        }
+        return display;
+    }
