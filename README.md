@@ -1,4 +1,4 @@
-# Coluson (Sudoku Solver)
+# Coulson (Sudoku Solver)
 
 # Author:
 
