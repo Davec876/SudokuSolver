@@ -42,22 +42,31 @@ public class CoulsonMain {
                                 
                 Now it's time to show me your sudoku puzzle!
                 Please type in your sudoku puzzle below and the order is from left to right
-                please use the number '0' to represent a blank space.
-                                
-                                
+                please use the number '0' to represent a blank space.          
                 """);
+        //Sudoku Board
         int[][] puzzle = generateMatrix(matrixSize, in);
 
+        System.out.println();
+        //User's Sudoku Grid
         for (int i = 0; i < puzzle.length; i++) {
+            System.out.println(Arrays.toString(puzzle[i]));
+        }
+        //calling the fill matrix method to fill the 0's with the correct value
+        fillMatrix(puzzle);
+        System.out.println("\nComplete! Here is your solved Sudoku Puzzle!\n");
+
+        for (int i = 0; i < puzzle.length ; i++) {
             System.out.println(Arrays.toString(puzzle[i]));
         }
     }
 
 
     /**
-     * @param matrixSize
-     * @param in
-     * @return
+     * Generates a 2D array that represents the Sudoku puzzle board itself
+     * @param matrixSize size of the grid (matrixSize.length).
+     * @param in Input from user (I.e their values for the puzzle.
+     * @return the matrix/Sudoku Board
      */
     public static int[][] generateMatrix(int matrixSize, Scanner in) {
         int[][] display = new int[matrixSize][matrixSize];
@@ -69,4 +78,98 @@ public class CoulsonMain {
         }
         return display;
     }
+
+    /**
+     *
+     * @param puzzle
+     * @return
+     */
+    public static boolean fillMatrix(int[][] puzzle){
+        for (int i = 0; i < puzzle.length; i++) {
+            for (int j = 0; j < puzzle[0].length; j++) {
+                if (puzzle[i][j] == 0){
+                    for (int k = 1; k <= puzzle.length; k++) {
+                        puzzle[i][j] = k;
+                        if(check(puzzle,i,j) && fillMatrix(puzzle)){
+                            return true;
+                        }
+                    }
+                    puzzle[i][j] = 0;
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     *
+     * @param puzzle
+     * @param i
+     * @param j
+     * @return
+     */
+    public static boolean check(int[][] puzzle, int i, int j){
+        return checkRow(puzzle, i, j) && checkColumn(puzzle,i,j) && checkGrid(puzzle, i, j);
+    }
+
+    /**
+     *
+     * @param puzzle
+     * @param i
+     * @param j
+     * @return
+     */
+    public static boolean checkRow(int[][] puzzle, int i, int j){
+        int[] check = puzzle[i];
+        return checkArray(check);
+    }
+
+    /**
+     *
+     * @param puzzle
+     * @param i
+     * @param j
+     * @return
+     */
+    public static boolean checkColumn(int[][] puzzle, int i, int j){
+        int[] check = new int[puzzle.length];
+        for(int k = 0; k < puzzle.length; k++){
+            check[k] = puzzle[k][j];
+        }
+        return checkArray(check);
+    }
+
+    /**
+     * 
+     * @param check
+     * @return
+     */
+    public static boolean checkArray(int[] check){
+        for (int k = 0; k < check.length; k++) {
+            for (int l = 0; l < check.length; l++) {
+                if (check[k] != 0 && l != k && check[k] == check[l]){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static boolean checkGrid(int[][] puzzle, int i, int j){
+        int gridBoxSize = (int) Math.pow(puzzle.length,0.5);
+        int row = i / gridBoxSize * gridBoxSize;
+        int column = (j / gridBoxSize * gridBoxSize);
+        int[] check = new int[puzzle.length];
+        int counter = 0;
+        for (int k = row; k < row + gridBoxSize; k++) {
+            for (int l = column; l < column + gridBoxSize; l++) {
+                check[counter] = puzzle[k][l];
+                counter ++;
+            }
+
+        }
+        return checkArray(check);
+    }
+
 }
