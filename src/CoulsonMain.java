@@ -80,9 +80,9 @@ public class CoulsonMain {
     }
 
     /**
-     *
-     * @param puzzle
-     * @return
+     *This method is to fill the Sudoku puzzle/matrix
+     * @param puzzle This is the sudoku puzzle/matrix
+     * @return once solved.
      */
     public static boolean fillMatrix(int[][] puzzle){
         for (int i = 0; i < puzzle.length; i++) {
@@ -103,22 +103,22 @@ public class CoulsonMain {
     }
 
     /**
-     *
-     * @param puzzle
-     * @param i
-     * @param j
-     * @return
+     *  Checking if the user properly has the correct value for each index and blank as well
+     * @param puzzle The sudoku puzzle/matrix
+     * @param i row of empty or '0'
+     * @param j column of empty or '0'
+     * @return true if it passes
      */
     public static boolean check(int[][] puzzle, int i, int j){
         return checkRow(puzzle, i, j) && checkColumn(puzzle,i,j) && checkGrid(puzzle, i, j);
     }
 
     /**
-     *
-     * @param puzzle
-     * @param i
-     * @param j
-     * @return
+     * Checking if the value for the solved value in each row is correct
+     * @param puzzle the sudoku puzzle/matrix
+     * @param i row of empty or '0'
+     * @param j column of empty or '0'
+     * @return true if it passes
      */
     public static boolean checkRow(int[][] puzzle, int i, int j){
         int[] check = puzzle[i];
@@ -126,11 +126,11 @@ public class CoulsonMain {
     }
 
     /**
-     *
-     * @param puzzle
-     * @param i
-     * @param j
-     * @return
+     *Checking if the value for the solved value in each column is correct
+     * @param puzzle the sudoku puzzle/matrix
+     * @param i row of empty or '0'
+     * @param j column of empty or '0'
+     * @return true if it passes
      */
     public static boolean checkColumn(int[][] puzzle, int i, int j){
         int[] check = new int[puzzle.length];
@@ -141,9 +141,9 @@ public class CoulsonMain {
     }
 
     /**
-     * 
-     * @param check
-     * @return
+     * Check if there is a duplicated within the matrix/puzzle
+     * @param check array to check if it's duplicate
+     * @return true if the matrix/puzzle doesn't have any duplicates in either row or column.
      */
     public static boolean checkArray(int[] check){
         for (int k = 0; k < check.length; k++) {
@@ -156,6 +156,13 @@ public class CoulsonMain {
         return true;
     }
 
+    /**
+     *  Checking if the value calculated for each 3x3 section is correct
+     * @param puzzle the Sudpku Puzzle/matrix
+     * @param i row number of the input puzzle
+     * @param j column number of the input puzzle
+     * @return true if it passes
+     */
     public static boolean checkGrid(int[][] puzzle, int i, int j){
         int gridBoxSize = (int) Math.pow(puzzle.length,0.5);
         int row = i / gridBoxSize * gridBoxSize;
